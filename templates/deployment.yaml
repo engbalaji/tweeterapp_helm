@@ -1,30 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tweetapp-pepoc-test2
-  namespace: development
+  name: {{ .Values.app.name }}
+  namespace: {{ .Values.namespace }}
   labels:
-    app.kubernetes.io/name: tweetapp-pepoc-test2
+    app.kubernetes.io/name: {{ .Values.labels.app.kubernetes.io/name }}
 spec:
-  replicas: 5
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: tweetapp-pepoc-test2
+      app.kubernetes.io/name: {{ .Values.labels.app.kubernetes.io/name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: tweetapp-pepoc-test2
+        app.kubernetes.io/name: {{ .Values.labels.app.kubernetes.io/name }}
     spec:
       containers:
-      - name: tweetapp-pepoc-test2
-        image: 960456129040.dkr.ecr.us-east-1.amazonaws.com/tweetapp2-pepoc-test2:latest
+      - name: {{ .Values.app.name }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         ports:
           - name: http
-            containerPort: 80
+            containerPort: {{ .Values.containerPort }}
         resources:
           requests:
-            memory: "64Mi"
-            cpu: "250m"
+            memory: {{ .Values.resources.requests.memory }}
+            cpu: {{ .Values.resources.requests.cpu }}
           limits:
-            memory: "128Mi"
-            cpu: "500m"
+            memory: {{ .Values.resources.limits.memory }}
+            cpu: {{ .Values.resources.limits.cpu }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.app.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: {{ .Values.labels.app.kubernetes.io/name }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: http
