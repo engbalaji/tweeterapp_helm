@@ -4,6 +4,7 @@ deploy:
   steps:
     setupVariables:
       after:
+        # Adding kubernetes cluster configuration
         - mkdir -p ~/.kube
         - aws eks update-kubeconfig --name $cluster_name --region $region  
         #- cp acme-fitness.yaml ~/.kube/config
@@ -13,14 +14,13 @@ deploy:
         - name: trigger Jenkins
           run: |
             echo "Executing Jenkins pipeline"
-            #curl --user $user:$token "$JENKINS_URL/job/$JOB_NAME?delay=0sec" -X POST
-            curl -X POST $JENKINS_URL/job/$JOB_NAME/build --user $user:$token
+            curl -X POST $JENKINS_URL/job/$JOB_NAME/build --user $jenkins_user:$jenkins_token
 
         - name: wait for Jenkins jobs to complete
           run: | 
             while true; do
               # Make a GET request to your Jenkins API and store the JSON response in a variable
-              response=$(curl --user $user:$token -s "$JENKINS_URL/job/$JOB_NAME/lastBuild/api/json")
+              response=$(curl --user $jenkins_user:$jenkins_token -s "$JENKINS_URL/job/$JOB_NAME/lastBuild/api/json")
 
               # Extract the result field from the JSON response using jq (a command-line JSON processor)
               result=$(echo "$response" | jq -r '.result')
