@@ -2,7 +2,7 @@ app:
   name: tweetapp-pepoc-test2
 labels:
   app:
-    kubernetes.io/name: tweetapp-pepoc-test2
+    kubernetes.io.name: tweetapp-pepoc-test2
 replicaCount: 5
 image:
   repository: 960456129040.dkr.ecr.us-east-1.amazonaws.com/tweetapp2-pepoc-test2
