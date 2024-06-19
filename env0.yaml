@@ -40,11 +40,11 @@ deploy:
       before:
         - name: Deployment refresh 
           run: |
-            if kubectl rollout status deployment tweetapp-pepoc-test2 -n $namespace; then
-              kubectl rollout restart deployment tweetapp-pepoc-test2 -n $namespace
-              kubectl rollout status deployment tweetapp-pepoc-test2 -n $namespace
-              kubectl rollout restart deployment tweetapp-pepoc-test2 -n $namespace
-              kubectl rollout status deployment tweetapp-pepoc-test2 -n $namespace
+            if kubectl rollout status deployment tweetapp-pepoc-test2 ; then
+              kubectl rollout restart deployment tweetapp-pepoc-test2 
+              kubectl rollout status deployment tweetapp-pepoc-test2 
+              kubectl rollout restart deployment tweetapp-pepoc-test2 
+              kubectl rollout status deployment tweetapp-pepoc-test2 
             else
               echo "Deployment not found so no restart needed."
             fi
