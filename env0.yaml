@@ -40,7 +40,7 @@ deploy:
       before:
         - name: Deployment refresh 
           run: |
-            if kubectl rollout status deployment $JOB_NAME -n $namespace ; then
+            if kubectl rollout status deployment $JOB_NAME -n $namespace; then
               kubectl rollout restart deployment $JOB_NAME -n $namespace
               kubectl rollout status deployment $JOB_NAME -n $namespace
               kubectl rollout restart deployment $JOB_NAME -n $namespace
