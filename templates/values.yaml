@@ -2,8 +2,7 @@ app:
   name: tweetapp-pepoc-test2
 labels:
   app:
-    kubernetes:
-      io:
+    kubernetes_io:
         name: tweetapp-pepoc-test2
 replicaCount: 5
 image:
