@@ -41,7 +41,7 @@ deploy:
         - name: Deployment refresh 
           run: |
             if kubectl rollout status deployment $JOB_NAME ; then
-              kubectl rollout restart deployment $JOB_NAME-test2 
+              kubectl rollout restart deployment $JOB_NAME 
               kubectl rollout status deployment $JOB_NAME
               kubectl rollout restart deployment $JOB_NAME
               kubectl rollout status deployment $JOB_NAME
