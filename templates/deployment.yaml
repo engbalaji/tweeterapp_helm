@@ -4,16 +4,16 @@ metadata:
   name: {{ .Values.app.name }}
   namespace: {{ .Values.namespace }}
   labels:
-    app.kubernetes.io/name: {{ .Values.labels.app.kubernetes.io.name }}
+    app.kubernetes.io/name: {{ .Values.labels.app.kubernetes.io/name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ .Values.labels.app.kubernetes.io.name }}
+      app.kubernetes.io/name: {{ .Values.labels.app.kubernetes.io/name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ .Values.labels.app.kubernetes.io.name }}
+        app.kubernetes.io/name: {{ .Values.labels.app.kubernetes.io/name }}
     spec:
       containers:
       - name: {{ .Values.app.name }}
@@ -28,4 +28,18 @@ spec:
           limits:
             memory: {{ .Values.resources.limits.memory }}
             cpu: {{ .Values.resources.limits.cpu }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.app.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: {{ .Values.labels.app.kubernetes.io/name }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: http
 
