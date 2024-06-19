@@ -16,4 +16,3 @@ resources:
 containerPort: 80
 service:
   port: 80
-namespace: development
